@@ -16,7 +16,7 @@ inputs:
     default: 'windows-certificate.pfx'
   windows-cert-importer:
     description: 'Path to script used to import the macOS P12 certificate used to sign the app.'
-    default: 'node $GITHUB_ACTIONS_PATH/scripts/import-windows-cert.js'
+    default: 'node $GITHUB_ACTION_PATH/scripts/import-windows-cert.js'
     required: false
   windows-cert-p12:
     description: 'The base64-encoded contents of the Windows P12 certificate used to sign the app for Squirrel and AppX makers. Used by the default `windows-cert-importer` script.'
