@@ -28,9 +28,16 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install
+    - name: Install platform dependencies
+      shell: bash
+      run: $GITHUB_ACTION_PATH/scripts/platform-dependencies.sh
+      env:
+        TARGET_MAKER: ${{ inputs.target-maker }}
+    - name: Install Node.js dependencies
       shell: bash
       run: $GITHUB_ACTION_PATH/scripts/install.sh
+      env:
+        NODE_INSTALLER: ${{ inputs.node-installer }}
     - name: Set up Windows signing certificate
       shell: bash
       run: ${{ inputs.windows-cert-importer }}
