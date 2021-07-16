@@ -52,7 +52,7 @@ runs:
       shell: bash
       run: ${{ inputs.macos-cert-importer }}
       env:
-        MACOS_CERT_PASSWORD: ${{ imputs.macos-cert-password }}
+        MACOS_CERT_PASSWORD: ${{ inputs.macos-cert-password }}
         MACOS_CERT_P12: ${{ inputs.macos-cert-p12 }}
     - name: Set up Windows signing certificate
       shell: bash
