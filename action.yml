@@ -1,4 +1,14 @@
 inputs:
+  macos-cert-importer:
+    description: 'Path to script used to import the macOS P12 certificate used to sign the app.'
+    default: '$GITHUB_ACTIONS_PATH/scripts/import-macos-cert.sh'
+    required: false
+  macos-cert-p12:
+    description: 'The base64-encoded contents of the macOS P12 certificate used to sign the app. Used by the default `macos-cert-importer` script.'
+    required: false
+  macos-cert-password:
+    description: 'The password used to unlock the signing certificate so that it can be imported into the keychain.'
+    required: false
   node-installer:
     description: 'Which Node.js package manager to use (`yarn` or `npm`). Defaults to detecting which package manager was used on the app via `yarn-or-npm` (which is used by Electron Forge).'
     required: false
@@ -38,6 +48,12 @@ runs:
       run: $GITHUB_ACTION_PATH/scripts/install.sh
       env:
         NODE_INSTALLER: ${{ inputs.node-installer }}
+    - name: Set up macOS signing certificate
+      shell: bash
+      run: ${{ inputs.macos-cert-importer }}
+      env:
+        MACOS_CERT_PASSWORD: ${{ imputs.macos-cert-password }}
+        MACOS_CERT_P12: ${{ inputs.macos-cert-p12 }}
     - name: Set up Windows signing certificate
       shell: bash
       run: ${{ inputs.windows-cert-importer }}
