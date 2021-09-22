@@ -8,6 +8,7 @@
 
 set -e
 
+script=make
 args=(
   --skip-package
   --targets
@@ -20,10 +21,13 @@ if [[ -n "$TARGET_ARCH" ]]; then
   args=( ${args[@]} --arch "$TARGET_ARCH" )
 fi
 
+script=publish
+args=( --dry-run ${args[@]} )
+
 if [[ "$NODE_INSTALLER" = "npm" ]]; then
-  npm run make -- "${args[@]}"
+  npm run "$script" -- "${args[@]}"
 elif [[ "$NODE_INSTALLER" = "yarn" ]]; then
-  yarn make "${args[@]}"
+  yarn run "$script" "${args[@]}"
 else
-  "$(npm bin)"/yarn-or-npm run make -- "${args[@]}"
+  "$(npm bin)"/yarn-or-npm run "$script" -- "${args[@]}"
 fi
